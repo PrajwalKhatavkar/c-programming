@@ -1,0 +1,18 @@
+def findMaxAverage(nums, k):
+    window_sum = sum(nums[:k])  # Calculate the sum of the first k elements
+    max_average = window_sum / k  # Initialize the maximum average
+    
+    for i in range(k, len(nums)):
+        window_sum = window_sum - nums[i - k] + nums[i]  # Update the sum by sliding the window
+        max_average = max(max_average, window_sum / k)  # Update the maximum average if necessary
+    
+    return max_average
+
+# Example usage:
+nums1 = [1, 12, -5, -6, 50, 3]
+k1 = 4
+print(findMaxAverage(nums1, k1))  # Output: 12.75
+
+nums2 = [5]
+k2 = 1
+print(findMaxAverage(nums2, k2))  # Output: 5.0
