@@ -1,0 +1,27 @@
+def longestSubarray(nums):
+    left = 0
+    max_length = 0
+    zero_index = -1
+    
+    for right in range(len(nums)):
+        if nums[right] == 0:
+            left = zero_index + 1
+            zero_index = right
+        
+        max_length = max(max_length, right - left + 1)
+    
+    # If there are no zeros encountered, return length - 1
+    if zero_index == -1:
+        return len(nums) - 1
+    
+    return max_length
+
+# Example usage:
+nums1 = [1, 1, 0, 1]
+print(longestSubarray(nums1))  # Output: 3
+
+nums2 = [0, 1, 1, 1, 0, 1, 1, 0, 1]
+print(longestSubarray(nums2))  # Output: 5
+
+nums3 = [1, 1, 1]
+print(longestSubarray(nums3))  # Output: 2
