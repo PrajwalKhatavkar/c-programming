@@ -1,26 +1,39 @@
-def longestOnes(nums, k):
-    left = 0
-    max_length = 0
-    zeros_count = 0
-    
-    for right in range(len(nums)):
-        if nums[right] == 0:
-            zeros_count += 1
-        
-        while zeros_count > k:
-            if nums[left] == 0:
-                zeros_count -= 1
-            left += 1
-        
-        max_length = max(max_length, right - left + 1)
-    
-    return max_length
+#include <stdio.h>
 
-# Example usage:
-nums1 = [1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0]
-k1 = 2
-print(longestOnes(nums1, k1))  # Output: 6
+int maxConsecutiveOnes(int* nums, int numsSize, int k) {
+    int left = 0, right;
+    int max_ones = 0, zero_count = 0;
 
-nums2 = [0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 0, 0, 0, 1, 1, 1, 1]
-k2 = 3
-print(longestOnes(nums2, k2))  # Output: 10
+    for (right = 0; right < numsSize; ++right) {
+        if (nums[right] == 0) {
+            zero_count++;
+        }
+
+        // If the number of zeros in the window exceeds k, slide the window to the right
+        while (zero_count > k) {
+            if (nums[left] == 0) {
+                zero_count--;
+            }
+            left++;
+        }
+
+        // Update max_ones if the current window size is greater
+        max_ones = (right - left + 1 > max_ones) ? right - left + 1 : max_ones;
+    }
+
+    return max_ones;
+}
+
+int main() {
+    int nums1[] = {1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0};
+    int k1 = 2;
+    int numsSize1 = sizeof(nums1) / sizeof(nums1[0]);
+    printf("Output for nums1: %d\n", maxConsecutiveOnes(nums1, numsSize1, k1));
+
+    int nums2[] = {0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 0, 0, 0, 1, 1, 1, 1};
+    int k2 = 3;
+    int numsSize2 = sizeof(nums2) / sizeof(nums2[0]);
+    printf("Output for nums2: %d\n", maxConsecutiveOnes(nums2, numsSize2, k2));
+
+    return 0;
+}
