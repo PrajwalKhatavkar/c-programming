@@ -1,0 +1,22 @@
+def maxOperations(nums, k):
+    num_freq = {}
+    count = 0
+    
+    for num in nums:
+        complement = k - num
+        if complement in num_freq and num_freq[complement] > 0:
+            count += 1
+            num_freq[complement] -= 1
+        else:
+            num_freq[num] = num_freq.get(num, 0) + 1
+    
+    return count
+
+# Example usage:
+nums1 = [1, 2, 3, 4]
+k1 = 5
+print(maxOperations(nums1, k1))  # Output: 2
+
+nums2 = [3, 1, 3, 4, 3]
+k2 = 6
+print(maxOperations(nums2, k2))  # Output: 1
